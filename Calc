@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Calculadora Pixel Art</title>
+
+  <!-- Fuente retro (fallbacks incluidos) -->
+  <style>
+    :root{
+      --bg0:#0b1020;
+      --bg1:#0f1a33;
+      --panel:#141c35;
+      --panel2:#0f162c;
+
+      --ink:#e9f0ff;
+      --muted:#98a7c7;
+
+      --green:#41ff9a;
+      --cyan:#52e3ff;
+      --pink:#ff4fd8;
+      --yellow:#ffd45a;
+      --red:#ff556a;
+
+      --btn:#1b2750;
+      --btn2:#141f42;
+      --btnHi:#23356e;
+
+      --shadow:#00000066;
+      --pixel:3px; /* “tamaño de pixel” global */
+      --radius:10px; /* solo para suavizar un pelín el conjunto */
+    }
+
+    /* ===== Pixel helpers ===== */
+    .pixel-border{
+      position: relative;
+      border: var(--pixel) solid #000;
+      box-shadow:
+        calc(var(--pixel) * 1) calc(var(--pixel) * 1) 0 var(--shadow);
+    }
+
+    /* Borde interior tipo “pixel frame” */
+    .pixel-frame{
+      position: relative;
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      padding: 18px;
+      border-radius: var(--radius);
+    }
+    .pixel-frame::before{
+      content:"";
+      position:absolute;
+      inset: 6px;
+      border: var(--pixel) solid #000;
+      opacity:.65;
+      pointer-events:none;
+    }
+    .pixel-frame::after{
+      content:"";
+      position:absolute;
+      inset: 10px;
+      border: var(--pixel) solid #000;
+      opacity:.25;
+      pointer-events:none;
+    }
+
+    /* Botón pixel: borde escalonado con sombras duras */
+    .px-btn{
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      padding: 14px 10px;
+      background: linear-gradient(180deg, var(--btn), var(--btn2));
+      color: var(--ink);
+      font-weight: 700;
+
+      border: var(--pixel) solid #000;
+      box-shadow:
+        calc(var(--pixel) * 1) calc(var(--pixel) * 1) 0 #000,
+        calc(var(--pixel) * 2) calc(var(--pixel) * 2) 0 var(--shadow);
+      border-radius: 8px;
+
+      cursor:pointer;
+      transition: transform .06s ease, filter .12s ease;
+      text-shadow: 1px 1px 0 #000;
+    }
+    .px-btn:hover{ filter: brightness(1.08); }
+    .px-btn:active{
+      transform: translateY(2px);
+      filter: brightness(0.98);
+      box-shadow:
+        calc(var(--pixel) * 1) calc(var(--pixel) * 1) 0 #000,
+        calc(var(--pixel) * 1) calc(var(--pixel) * 2) 0 var(--shadow);
+    }
+    .px-btn:focus-visible{
+      outline: none;
+      box-shadow:
+        0 0 0 calc(var(--pixel) * 1) var(--cyan),
+        calc(var(--pixel) * 1) calc(var(--pixel) * 1) 0 #000,
+        calc(var(--pixel) * 2) calc(var(--pixel) * 2) 0 var(--shadow);
+    }
+
+    /* Variantes */
+    .op   { background: linear-gradient(180deg, #2a3f86, #1c2b60); }
+    .eq   { background: linear-gradient(180deg, #2a8a6a, #1f5c47); color:#eafff6; }
+    .util { background: linear-gradient(180deg, #7a2d7f, #4d1c51); }
+    .danger { background: linear-gradient(180deg, #8a2a3a, #5c1f2a); }
+
+    /* ===== Layout general ===== */
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(1200px 700px at 20% 20%, #162a66 0%, transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, #2a145f 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      padding: 22px;
+    }
+
+    .wrap{
+      width: min(420px, 96vw);
+    }
+
+    /* “Pixel art” decorativo: una franja superior con cuadritos */
+    .banner{
+      display:flex;
+      gap:6px;
+      margin: 0 0 10px 0;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .leds{
+      display:flex; gap:6px; align-items:center;
+    }
+    .led{
+      width: 14px; height: 14px;
+      border: var(--pixel) solid #000;
+      box-shadow: calc(var(--pixel) * 1) calc(var(--pixel) * 1) 0 #000;
+      background:#1b2b55;
+    }
+    .led.g{ background: var(--green); }
+    .led.c{ background: var(--cyan); }
+    .led.p{ background: var(--pink); }
+    .title{
+      font-weight: 800;
+      letter-spacing: .06em;
+      font-size: 13px;
+      color: var(--muted);
+      text-shadow: 1px 1px 0 #000;
+    }
+
+    /* Panel principal */
+    .calc{
+      border-radius: var(--radius);
+    }
+
+    /* Pantalla */
+    .screen{
+      margin-bottom: 14px;
+      padding: 14px 14px 10px;
+      background: #0a1024;
+      border: var(--pixel) solid #000;
+      box-shadow:
+        calc(var(--pixel) * 1) calc(var(--pixel) * 1) 0 #000,
+        calc(var(--pixel) * 2) calc(var(--pixel) * 2) 0 var(--shadow);
+      border-radius: 10px;
+      position: relative;
+      overflow:hidden;
+    }
+    .screen::before{
+      /* scanlines sutiles */
+      content:"";
+      position:absolute;
+      inset:0;
+      background: repeating-linear-gradient(
+        180deg,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        rgba(0,0,0,0.00) 2px,
+        rgba(0,0,0,0.00) 4px
+      );
+      pointer-events:none;
+      opacity:.55;
+      mix-blend-mode: overlay;
+    }
+    .mini{
+      font-size: 12px;
+      color: #7fd6ff;
+      opacity: .9;
+      min-height: 16px;
+      text-shadow: 1px 1px 0 #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .main{
+      font-size: 30px;
+      line-height: 1.25;
+      font-weight: 900;
+      color: #dfffea;
+      text-shadow: 2px 2px 0 #000;
+      text-align:right;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      padding-top: 4px;
+    }
+
+    /* Grid botones */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .span2{ grid-column: span 2; }
+    .span3{ grid-column: span 3; }
+
+    /* Footer tip */
+    .tip{
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      text-shadow: 1px 1px 0 #000;
+      opacity:.95;
+    }
+    kbd{
+      font: inherit;
+      padding: 2px 6px;
+      border: var(--pixel) solid #000;
+      border-radius: 6px;
+      background:#0b1330;
+      box-shadow: calc(var(--pixel) * 1) calc(var(--pixel) * 1) 0 #000;
+      color:#dfe7ff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div class="leds" aria-hidden="true">
+        <div class="led g"></div>
+        <div class="led c"></div>
+        <div class="led p"></div>
+        <div class="led"></div>
+      </div>
+      <div class="title">PIXEL-CALC v1.0</div>
+    </div>
+
+    <div class="pixel-frame pixel-border calc" role="application" aria-label="Calculadora pixel art">
+      <div class="screen" aria-live="polite">
+        <div id="mini" class="mini"></div>
+        <div id="main" class="main">0</div>
+      </div>
+
+      <div class="grid">
+        <button class="px-btn danger" data-action="clear" title="Borrar todo (Esc)">C</button>
+        <button class="px-btn util" data-action="back" title="Borrar último (Backspace)">⌫</button>
+        <button class="px-btn util" data-action="sign" title="Cambiar signo (S)">±</button>
+        <button class="px-btn op" data-op="/" title="Dividir (/)">÷</button>
+
+        <button class="px-btn" data-digit="7">7</button>
+        <button class="px-btn" data-digit="8">8</button>
+        <button class="px-btn" data-digit="9">9</button>
+        <button class="px-btn op" data-op="*" title="Multiplicar (*)">×</button>
+
+        <button class="px-btn" data-digit="4">4</button>
+        <button class="px-btn" data-digit="5">5</button>
+        <button class="px-btn" data-digit="6">6</button>
+        <button class="px-btn op" data-op="-" title="Restar (-)">−</button>
+
+        <button class="px-btn" data-digit="1">1</button>
+        <button class="px-btn" data-digit="2">2</button>
+        <button class="px-btn" data-digit="3">3</button>
+        <button class="px-btn op" data-op="+" title="Sumar (+)">+</button>
+
+        <button class="px-btn span2" data-digit="0">0</button>
+        <button class="px-btn" data-action="dot" title="Punto (.)">.</button>
+        <button class="px-btn eq" data-action="equals" title="Igual (Enter)">=</button>
+      </div>
+
+      <div class="tip">
+        Teclas: <kbd>0-9</kbd> <kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> <kbd>.</kbd>
+        <kbd>Enter</kbd> <kbd>Backspace</kbd> <kbd>Esc</kbd>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Calculadora “desde 0” (sin eval), con lógica típica de calculadora.
+    const $mini = document.getElementById("mini");
+    const $main = document.getElementById("main");
+
+    let current = "0";     // lo que se ve y se edita
+    let prev = null;       // número anterior (string)
+    let op = null;         // operación actual: + - * /
+    let justEvaluated = false;
+
+    function formatForDisplay(s){
+      // Mantiene decimales si el usuario está escribiendo (p.ej. "12."), y evita notación rara.
+      if (s === "Error") return s;
+
+      // Si está en modo edición con punto final, no lo conviertas a número.
+      if (s.endsWith(".") && !isNaN(Number(s.slice(0,-1)))) return s;
+
+      const n = Number(s);
+      if (!isFinite(n)) return "Error";
+
+      // Limitar dígitos para que quepa; a la vez evitar demasiados decimales.
+      // (Hecho simple y robusto para calculadora)
+      const abs = Math.abs(n);
+      let out;
+      if (abs !== 0 && (abs >= 1e12 || abs < 1e-9)){
+        out = n.toExponential(6);
+      } else {
+        out = String(Number(n.toFixed(10))); // recorta "ruido" flotante
+      }
+
+      // Recorta longitud para pantalla
+      if (out.length > 16) out = n.toExponential(6);
+      return out;
+    }
+
+    function updateScreen(){
+      const miniText =
+        (prev !== null && op !== null)
+          ? `${formatForDisplay(prev)} ${symbol(op)}`
+          : "";
+      $mini.textContent = miniText;
+      $main.textContent = formatForDisplay(current);
+    }
+
+    function symbol(o){
+      return o === "*" ? "×" : o === "/" ? "÷" : o;
+    }
+
+    function inputDigit(d){
+      if (justEvaluated){
+        // Si acabas de evaluar, empezar nuevo número
+        current = "0";
+        justEvaluated = false;
+      }
+      if (current === "0") current = d;
+      else if (current.length < 18) current += d;
+      updateScreen();
+    }
+
+    function inputDot(){
+      if (justEvaluated){
+        current = "0";
+        justEvaluated = false;
+      }
+      if (!current.includes(".")) current += ".";
+      updateScreen();
+    }
+
+    function clearAll(){
+      current = "0";
+      prev = null;
+      op = null;
+      justEvaluated = false;
+      updateScreen();
+    }
+
+    function backspace(){
+      if (justEvaluated) {
+        // si acabas de evaluar, backspace vuelve a edición del resultado
+        justEvaluated = false;
+      }
+      if (current.length <= 1) current = "0";
+      else current = current.slice(0, -1);
+      // si termina en "-" solo, vuelve a 0
+      if (current === "-") current = "0";
+      updateScreen();
+    }
+
+    function toggleSign(){
+      if (current === "0") return;
+      if (current.startsWith("-")) current = current.slice(1);
+      else current = "-" + current;
+      updateScreen();
+    }
+
+    function setOp(nextOp){
+      if (current === "Error") return;
+
+      if (op && prev !== null && !justEvaluated){
+        // Encadena operación (2 + 3 + 4 ...)
+        compute();
+      } else if (prev === null){
+        prev = current;
+      }
+      op = nextOp;
+      justEvaluated = true; // siguiente dígito empieza nuevo número
+      updateScreen();
+    }
+
+    function compute(){
+      if (op === null || prev === null) return;
+
+      const a = Number(prev);
+      const b = Number(current);
+
+      if (!isFinite(a) || !isFinite(b)){
+        current = "Error";
+        prev = null;
+        op = null;
+        updateScreen();
+        return;
+      }
+
+      let r;
+      switch(op){
+        case "+": r = a + b; break;
+        case "-": r = a - b; break;
+        case "*": r = a * b; break;
+        case "/": r = (b === 0) ? Infinity : a / b; break;
+      }
+
+      if (!isFinite(r)){
+        current = "Error";
+      } else {
+        // Ajuste para flotantes típico (sin pasarse)
+        current = String(Number(r.toFixed(12)));
+      }
+      prev = null;
+      op = null;
+      justEvaluated = true;
+      updateScreen();
+    }
+
+    // Clicks
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+
+      const digit = btn.dataset.digit;
+      const oper = btn.dataset.op;
+      const action = btn.dataset.action;
+
+      if (digit != null) return inputDigit(digit);
+      if (oper) return setOp(oper);
+
+      switch(action){
+        case "dot": return inputDot();
+        case "clear": return clearAll();
+        case "back": return backspace();
+        case "sign": return toggleSign();
+        case "equals": return compute();
+      }
+    });
+
+    // Teclado
+    document.addEventListener("keydown", (e) => {
+      const k = e.key;
+
+      if (k >= "0" && k <= "9") { e.preventDefault(); return inputDigit(k); }
+      if (k === ".") { e.preventDefault(); return inputDot(); }
+
+      if (k === "+" || k === "-" || k === "*" || k === "/") {
+        e.preventDefault(); return setOp(k);
+      }
+
+      if (k === "Enter" || k === "=") { e.preventDefault(); return compute(); }
+      if (k === "Backspace") { e.preventDefault(); return backspace(); }
+      if (k === "Escape") { e.preventDefault(); return clearAll(); }
+
+      // Extra: S para cambiar signo
+      if (k.toLowerCase() === "s") { e.preventDefault(); return toggleSign(); }
+    });
+
+    updateScreen();
+  </script>
+</body>
+</html>
