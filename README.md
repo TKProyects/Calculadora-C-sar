@@ -5,7 +5,7 @@ Aquí tienes los diagramas de clases y de secuencia del proyecto perfectamente r
 1. Diagrama de Clases
 
 Este diagrama muestra la estructura estática de tus clases.
-
+```mermaid
 classDiagram
 class Producto {
     -String nombre
@@ -31,7 +31,7 @@ Main ..> Scanner : "usa"
 2. Diagrama de Secuencia
 
 Este diagrama muestra el flujo de ejecución paso a paso en el tiempo.
-
+```mermaid
 sequenceDiagram
 autonumber
 actor Usuario
