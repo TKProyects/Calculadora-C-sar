@@ -1,4 +1,12 @@
 ```mermaid
+iagramas del Proyecto
+
+Aquí tienes los diagramas de clases y de secuencia del proyecto perfectamente renderizados.
+
+1. Diagrama de Clases
+
+Este diagrama muestra la estructura estática de tus clases.
+
 classDiagram
 class Producto {
     -String nombre
@@ -19,6 +27,12 @@ class Main {
 Main ..> Producto : "instancia"
 Main ..> CalculadoraIVA : "usa"
 Main ..> Scanner : "usa"
+
+
+2. Diagrama de Secuencia
+
+Este diagrama muestra el flujo de ejecución paso a paso en el tiempo.
+
 sequenceDiagram
 autonumber
 actor Usuario
