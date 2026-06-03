@@ -1,4 +1,3 @@
-```mermaid
 classDiagram
 class Producto {
     -String nombre
@@ -37,9 +36,10 @@ M->>P: new Producto ("Camiseta", 20.0)
 activate P
 P-->>M: instancia creada
 deactivate P
-M->>C: calcular PrecioFinal (20.0)
+M->>C: calcularPrecioFinal(20.0)
 activate C
 Note over C: Aplica IVA (21%)
 C-->>M: 24.2
 deactivate C
 M->>Usuario: Imprime "Total con IVA: 24.2"
+
