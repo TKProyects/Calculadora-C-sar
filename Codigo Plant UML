@@ -1,24 +1,20 @@
-```mermaid
-@startuml
-skinparam classAttributeIconSize 0
-
+classDiagram
 class Producto {
-    - nombre: String
-    - precioBase: double
-    + Producto(nombre: String, precioBase: double)
-    + getPrecioBase(): double
+    -String nombre
+    -double precioBase
+    +Producto(String nombre, double precioBase)
+    +getPrecioBase() double
 }
 
 class CalculadoraIVA {
-    - IVA: double = 0.21
-    + calcularPrecioFinal(precio: double): double
+    -double IVA
+    +calcularPrecioFinal(double precio) double
 }
 
 class Main {
-    + main(args: String[]): void
+    +main(args: String[]) void
 }
 
-Main ..> Producto : usa >
-Main ..> CalculadoraIVA : usa >
-
-@enduml
+Main ..> Producto : "instancia"
+Main ..> CalculadoraIVA : "usa"
+Main ..> Scanner : "usa"
