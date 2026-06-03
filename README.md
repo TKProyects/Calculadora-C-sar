@@ -1,5 +1,4 @@
-```mermaid
-iagramas del Proyecto
+Diagramas del Proyecto
 
 Aquí tienes los diagramas de clases y de secuencia del proyecto perfectamente renderizados.
 
