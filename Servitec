@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SERVITIC - Servicios tecnológicos y mantenimiento informático profesional">
+    <title>SERVITIC - Servicios Tecnológicos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo-section">
+                <a href="#" class="logo">
+                    <span class="logo-icon">⚙️</span>
+                    <span class="logo-text">SERVITIC</span>
+                </a>
+            </div>
+
+            <!-- Navegación -->
+            <nav class="nav-section">
+                <button class="menu-toggle" aria-label="Menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                    <li><a href="#quienes-somos" class="nav-link">Quiénes somos</a></li>
+                    <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- SECCIÓN INICIO/HERO -->
+        <section id="inicio" class="hero">
+            <div class="hero-content">
+                <h1>Soluciones Tecnológicas Confiables</h1>
+                <p>Servicios de mantenimiento informático y consultoría técnica para tu empresa</p>
+                <a href="#contacto" class="btn btn-primary">Contáctanos</a>
+            </div>
+        </section>
+
+        <!-- SECCIÓN SERVICIOS -->
+        <section id="servicios" class="servicios">
+            <div class="section-container">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                <p class="section-subtitle">Soluciones integrales para tu infraestructura tecnológica</p>
+
+                <div class="servicios-grid">
+                    <article class="servicio-card">
+                        <div class="servicio-icon">🖥️</div>
+                        <h3>Mantenimiento Informático</h3>
+                        <p>Mantenimiento preventivo y correctivo de equipos, sistemas operativos y redes empresariales.</p>
+                    </article>
+
+                    <article class="servicio-card">
+                        <div class="servicio-icon">🔒</div>
+                        <h3>Seguridad Informática</h3>
+                        <p>Protección contra ciberamenazas, antivirus, firewall y copias de seguridad automáticas.</p>
+                    </article>
+
+                    <article class="servicio-card">
+                        <div class="servicio-icon">☁️</div>
+                        <h3>Soluciones Cloud</h3>
+                        <p>Migración a la nube, almacenamiento seguro y administración de servidores virtuales.</p>
+                    </article>
+
+                    <article class="servicio-card">
+                        <div class="servicio-icon">🛠️</div>
+                        <h3>Soporte Técnico</h3>
+                        <p>Asistencia técnica 24/7 para resolver incidencias y problemas de tus sistemas.</p>
+                    </article>
+
+                    <article class="servicio-card">
+                        <div class="servicio-icon">📱</div>
+                        <h3>Consultoría Tecnológica</h3>
+                        <p>Asesoramiento profesional para optimizar tu infraestructura y procesos digitales.</p>
+                    </article>
+
+                    <article class="servicio-card">
+                        <div class="servicio-icon">🌐</div>
+                        <h3>Conectividad y Redes</h3>
+                        <p>Diseño, instalación y mantenimiento de redes de datos y comunicaciones empresariales.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN QUIÉNES SOMOS -->
+        <section id="quienes-somos" class="quienes-somos">
+            <div class="section-container">
+                <h2 class="section-title">Quiénes Somos</h2>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>SERVITIC es una empresa especializada en servicios tecnológicos y mantenimiento informático con más de 15 años de experiencia en el sector.</p>
+                        
+                        <p>Nuestro equipo de profesionales certificados está comprometido con proporcionar soluciones integrales y personalizadas que permitan a las empresas optimizar su infraestructura tecnológica y aumentar su productividad.</p>
+
+                        <p>Trabajamos con empresas de todos los tamaños, desde pequeños negocios hasta grandes corporaciones, adaptando nuestros servicios a las necesidades específicas de cada cliente.</p>
+
+                        <div class="stats">
+                            <div class="stat">
+                                <span class="stat-number">500+</span>
+                                <span class="stat-label">Clientes satisfechos</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">15+</span>
+                                <span class="stat-label">Años de experiencia</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">24/7</span>
+                                <span class="stat-label">Soporte disponible</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-image">
+                        <div class="image-placeholder">
+                            <span>📊 Equipo Profesional</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN CONTACTO -->
+        <section id="contacto" class="contacto">
+            <div class="section-container">
+                <h2 class="section-title">Contacto</h2>
+                <p class="section-subtitle">¿Necesitas más información? Ponte en contacto con nosotros</p>
+
+                <div class="contacto-content">
+                    <form class="contacto-form" method="POST" action="#" novalidate>
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo *</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="empresa">Empresa</label>
+                            <input type="text" id="empresa" name="empresa">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="asunto">Asunto *</label>
+                            <input type="text" id="asunto" name="asunto" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mensaje">Mensaje *</label>
+                            <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+                        </div>
+
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="privacidad" name="privacidad" required>
+                            <label for="privacidad">He leído y acepto la <a href="#politica-privacidad">política de privacidad</a> *</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">Enviar Mensaje</button>
+                    </form>
+
+                    <div class="contacto-info">
+                        <div class="info-card">
+                            <h3>📧 Email</h3>
+                            <p><a href="mailto:info@servitic.es">info@servitic.es</a></p>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>📞 Teléfono</h3>
+                            <p><a href="tel:+34961234567">+34 96 123 45 67</a></p>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>🕐 Horario</h3>
+                            <p>Lunes a Viernes: 9:00 - 18:00<br>Soporte 24/7 disponible</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-info">
+                    <h4>SERVITIC</h4>
+                    <p>Servicios tecnológicos y mantenimiento informático profesional</p>
+                    <div class="footer-contact">
+                        <p>📧 <a href="mailto:info@servitic.es">info@servitic.es</a></p>
+                        <p>📞 <a href="tel:+34961234567">+34 96 123 45 67</a></p>
+                    </div>
+                </div>
+
+                <nav class="footer-nav">
+                    <h4>Información Legal</h4>
+                    <ul>
+                        <li><a href="#politica-privacidad" class="footer-link">Política de Privacidad</a></li>
+                        <li><a href="#politica-cookies" class="footer-link">Política de Cookies</a></li>
+                        <li><a href="#aviso-legal" class="footer-link">Aviso Legal</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 SERVITIC. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALES OCULTOS PARA SECCIONES LEGALES -->
+    <div id="politica-privacidad" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Política de Privacidad</h2>
+            <p>En SERVITIC tratamos tus datos personales de forma confidencial y segura, en cumplimiento con la Ley Orgánica de Protección de Datos (LOPD) y el Reglamento General de Protección de Datos (RGPD).</p>
+            <p><strong>Responsable:</strong> SERVITIC, S.L.</p>
+            <p><strong>Finalidad:</strong> Gestionar tus consultas, prestar nuestros servicios y manterte informado sobre nuestras novedades.</p>
+            <p><strong>Derechos:</strong> Tienes derecho a acceder, rectificar, suprimir y portar tus datos, así como a oponerme al tratamiento.</p>
+            <button onclick="closeModal('politica-privacidad')" class="btn btn-primary">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="politica-cookies" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Política de Cookies</h2>
+            <p>Este sitio web utiliza cookies para mejorar la experiencia de usuario, analizar el tráfico y personalizar el contenido.</p>
+            <p><strong>Tipos de cookies:</strong></p>
+            <ul>
+                <li>Cookies técnicas: Necesarias para el funcionamiento del sitio</li>
+                <li>Cookies analíticas: Para medir el rendimiento y uso del sitio</li>
+                <li>Cookies publicitarias: Para personalizar anuncios</li>
+            </ul>
+            <p>Puedes cambiar tu preferencia de cookies en tu navegador en cualquier momento.</p>
+            <button onclick="closeModal('politica-cookies')" class="btn btn-primary">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="aviso-legal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Aviso Legal</h2>
+            <p><strong>Titular del sitio:</strong> SERVITIC, S.L.</p>
+            <p><strong>Responsable del sitio:</strong> SERVITIC</p>
+            <p><strong>Alojamiento:</strong> Este sitio está alojado de manera segura y profesional.</p>
+            <p><strong>Limitación de responsabilidad:</strong> SERVITIC no se hace responsable de los daños o perjuicios causados por el acceso, uso o imposibilidad de uso de este sitio web.</p>
+            <p><strong>Propiedad intelectual:</strong> Todos los contenidos son propiedad intelectual de SERVITIC.</p>
+            <button onclick="closeModal('aviso-legal')" class="btn btn-primary">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // Toggle menu móvil
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Cerrar menu al hacer click en un enlace
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-menu').classList.remove('active');
+                document.querySelector('.menu-toggle').classList.remove('active');
+            });
+        });
+
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target && !target.classList.contains('modal')) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    } else if (target && target.classList.contains('modal')) {
+                        target.style.display = 'flex';
+                    }
+                }
+            });
+        });
+
+        // Modal functions
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Cerrar modal al hacer click fuera
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        });
+
+        // Form submission (simulado)
+        document.querySelector('.contacto-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Gracias por tu mensaje! Nos pondremos en contacto pronto.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
