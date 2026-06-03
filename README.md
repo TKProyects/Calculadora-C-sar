@@ -1,3 +1,4 @@
+```mermaid
 classDiagram
 class Producto {
     -String nombre
